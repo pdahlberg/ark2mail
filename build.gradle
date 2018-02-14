@@ -1,0 +1,101 @@
+
+buildscript {
+  ext.kotlin_version = '1.2.21'
+  ext.junitVersion = '5.0.2'
+  ext.springBootVersion = '1.5.10.RELEASE'
+  ext.springVersion = '5.0.0.RELEASE'
+  ext.spekVersion = '1.1.5'
+
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
+    //classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+    classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
+  }
+}
+
+plugins {
+  id "org.jetbrains.kotlin.plugin.jpa" version "1.2.21"
+  id "org.jetbrains.kotlin.plugin.spring" version "1.2.21"
+
+  id 'java'
+  id "org.jetbrains.kotlin.jvm" version "1.2.21"
+  id "org.springframework.boot" version "1.5.10.RELEASE"
+  //id 'org.junit.platform.gradle.plugin'
+
+}
+
+group 'com.raglic'
+version '0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+  compile "org.springframework.boot:spring-boot-starter-actuator"
+  compile "org.springframework.boot:spring-boot-starter-web"
+  compile "org.springframework.boot:spring-boot-starter-thymeleaf"
+  compile "org.springframework.boot:spring-boot-starter-mail"
+  compile "org.springframework.boot:spring-boot-starter-data-jpa"
+  compile "org.springframework.boot:spring-boot-starter-cache"
+  compile "org.springframework.security:spring-security-core:$springVersion"
+
+
+  compile('com.h2database:h2:1.4.196')
+  compile('org.flywaydb:flyway-core:5.0.7')
+  compile('com.zaxxer:HikariCP') {
+    exclude(module: 'tools')
+  }
+  compile('org.hibernate:hibernate-ehcache:5.0.12.Final')
+  compile('org.hibernate:hibernate-java8:5.0.12.Final')
+
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.8.4')
+  compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.4"
+
+  // ARK client
+  compile fileTree(dir: '/home/pmd/dev/ark/ark-java/build/libs', include: '*.jar')
+  compile 'org.bitcoinj:bitcoinj-core:0.14.5'
+  compile 'org.codehaus.groovy:groovy-all:2.4.13'
+  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+  compile 'com.google.code.gson:gson:2.8.0'
+  compile 'com.madgag.spongycastle:core:1.54.0.0'
+
+  testCompile "org.springframework.boot:spring-boot-starter-test"
+  testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  testCompile "com.github.sbrannen:spring-test-junit5:1.0.2"
+  testCompile "org.jetbrains.spek:spek-api:$spekVersion"
+  testRuntime "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
+}
+
+compileKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+  kotlinOptions.jvmTarget = "1.8"
+}
+
+/*
+junitPlatform {
+  filters {
+    engines {
+      include 'spek'
+    }
+  }
+}
+*/
